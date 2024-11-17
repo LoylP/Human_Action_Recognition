@@ -1,0 +1,7 @@
+tensorflow
+mediapipe
+opencv-python 
+numpy 
+scikit-learn 
+tqdm 
+seaborn
