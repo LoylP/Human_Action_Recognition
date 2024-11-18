@@ -3,7 +3,6 @@ import numpy as np
 import mediapipe as mp
 from tensorflow.keras.models import load_model
 import pickle
-import time
 
 def predict_realtime(model_path, label_encoder_path, video_path):
     model = load_model(model_path)
@@ -62,8 +61,9 @@ def predict_realtime(model_path, label_encoder_path, video_path):
     cap.release()
     cv2.destroyAllWindows()
 
-model_path = "model/action_recognition_model.keras"
-label_encoder_path = "model/label_encoder.pkl"
-video_path = "/mnt/d/action/falling_down/S001C003P002R001A043_rgb.avi"
+#Test với file.mp4
+# model_path = "model/action_recognition_model.keras"
+# label_encoder_path = "model/label_encoder.pkl"
+# video_path = "/home/loylp/project/SmartAlert-System/uploads/fall.mp4"
 
-predict_realtime(model_path, label_encoder_path, video_path)
+# predict_realtime(model_path, label_encoder_path, video_path)

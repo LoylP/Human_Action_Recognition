@@ -5,3 +5,6 @@ numpy
 scikit-learn 
 tqdm 
 seaborn
+fastapi
+python-multipart 
+uvicorn
