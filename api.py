@@ -1,5 +1,5 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
-from fastapi.responses import StreamingResponse, JSONResponse
+from fastapi.responses import StreamingResponse, JSONResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 import cv2
 import numpy as np
@@ -12,7 +12,7 @@ from pathlib import Path
 import shutil
 from typing import Optional
 import asyncio
-from utils import predict_realtime
+from util import predict_realtime
 import uvicorn
 
 app = FastAPI(
@@ -31,8 +31,9 @@ app.add_middleware(
 )
 
 # Global variables
-MODEL_PATH = "model/action_recognition_model.keras"
-LABEL_ENCODER_PATH = "model/label_encoder.pkl"
+MODEL_PATH = "config/action_recognition_model.keras"
+LABEL_ENCODER_PATH = "config/label_encoder.pkl"
+
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(exist_ok=True)
 
@@ -191,18 +192,18 @@ async def delete_video(filename: str):
             "message": str(e)
         }, status_code=500)
 
-@app.post("/predict/path")
-async def predict_from_path(video_path: str):
-    if not os.path.exists(video_path):
+@app.get("/predict/{filename}")
+async def predict_video(filename: str):
+    video_path = UPLOAD_DIR / filename
+    
+    if not video_path.exists():
         raise HTTPException(status_code=404, detail="Video file not found")
 
     try:
-        return StreamingResponse(
-            process_video_stream(video_path),
-            media_type='multipart/x-mixed-replace; boundary=frame'
-        )
+        # Return the video file as a response with correct media type
+        return FileResponse(video_path, media_type="video/mp4")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing video: {str(e)}")
 
 if __name__ == "__main__":
-    uvicorn.run("fastAPI:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("api:app", host="0.0.0.0", port=8000, reload=True)
