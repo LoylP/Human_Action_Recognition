@@ -1,3 +1,5 @@
 env
 __pycache__
 uploads/
+
+config/yolov7-w6-pose.pt
