@@ -19,12 +19,9 @@ def extract_skeleton_features(video_path):
             
         # Chuyển đổi BGR sang RGB
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        
-        # Phát hiện pose
         results = pose.process(frame_rgb)
         
         if results.pose_landmarks:
-            # Lấy các điểm landmark (33 điểm, mỗi điểm có x,y,z)
             landmarks = np.array([[lm.x, lm.y, lm.z] for lm in results.pose_landmarks.landmark])
             frames_landmarks.append(landmarks.flatten())
     
@@ -85,8 +82,8 @@ def predict_multiple_videos(video_folder, model_path, label_encoder_path, confid
             print(f"Độ tin cậy: {confidence:.2%}")
             print("-" * 50)
 
-model_path = "model/action_recognition_model.keras"
-label_encoder_path = "model/label_encoder.pkl"
+model_path = "config/action_recognition_model.keras"
+label_encoder_path = "config/label_encoder.pkl"
 video_path = "/mnt/d/action/running/S020C003P043R001A099_rgb.avi"
 
 model, label_encoder = load_saved_model(model_path, label_encoder_path)
