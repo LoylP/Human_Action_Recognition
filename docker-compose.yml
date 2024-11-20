@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./my-app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./my-app:/app
+    networks:
+      - app-network
+
+  mediapipe:
+    build:
+      context: ./mediapipe
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./mediapipe:/app
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1  # Số lượng GPU sử dụng
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=${NVIDIA_VISIBLE_DEVICES:-none} # GPU fallback
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    runtime: ${BACKEND_RUNTIME:-runc}  # Chuyển sang runc nếu không có GPU
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
