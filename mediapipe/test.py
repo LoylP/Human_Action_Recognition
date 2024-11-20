@@ -5,6 +5,7 @@ from tensorflow.keras.models import load_model
 import mediapipe as mp
 import pickle
 
+os.environ["CUDA_VISIBLE_DEVICES"] = ""
 mp_pose = mp.solutions.pose
 pose = mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.5)
 
@@ -82,13 +83,13 @@ def predict_multiple_videos(video_folder, model_path, label_encoder_path, confid
             print(f"Độ tin cậy: {confidence:.2%}")
             print("-" * 50)
 
-model_path = "config/action_recognition_model.keras"
-label_encoder_path = "config/label_encoder.pkl"
-video_path = "/mnt/d/action/running/S020C003P043R001A099_rgb.avi"
+# model_path = "config/action_recognition_model.keras"
+# label_encoder_path = "config/label_encoder.pkl"
+# video_path = "../uploads/fall.mp4"
 
-model, label_encoder = load_saved_model(model_path, label_encoder_path)
-action, confidence = predict_video(video_path, model, label_encoder, 0.5)
+# model, label_encoder = load_saved_model(model_path, label_encoder_path)
+# action, confidence = predict_video(video_path, model, label_encoder, 0.5)
             
-print(f"Hành động dự đoán: {action}")
-print(f"Độ tin cậy: {confidence:.2%}")
-print("-" * 50)
+# print(f"Hành động dự đoán: {action}")
+# print(f"Độ tin cậy: {confidence:.2%}")
+# print("-" * 50)

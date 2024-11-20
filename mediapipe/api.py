@@ -30,11 +30,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+os.environ["CUDA_VISIBLE_DEVICES"] = ""
 # Global variables
 MODEL_PATH = "config/action_recognition_model.keras"
 LABEL_ENCODER_PATH = "config/label_encoder.pkl"
 
-UPLOAD_DIR = Path("uploads")
+UPLOAD_DIR = Path(__file__).resolve().parent.parent / "uploads"
 UPLOAD_DIR.mkdir(exist_ok=True)
 
 # Global variables for models
@@ -125,7 +126,7 @@ async def upload_video(file: UploadFile = File(...)):
                 "message": "Invalid file type. Please upload a video file."
             }, status_code=400)
 
-        # Save uploaded file
+        # Save uploaded file    
         file_path = UPLOAD_DIR / file.filename
         with file_path.open("wb") as buffer:
             shutil.copyfileobj(file.file, buffer)

@@ -67,6 +67,6 @@ def predict_realtime(model_path, label_encoder_path, video_path):
 # Test với file.mp4
 # model_path = "config/action_recognition_model.keras"
 # label_encoder_path = "config/label_encoder.pkl"
-# video_path = "/home/loylp/project/SmartAlert-System/uploads/fall.mp4"
+# video_path = "../uploads/fall.mp4"
 
 # predict_realtime(model_path, label_encoder_path, video_path)
