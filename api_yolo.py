@@ -33,6 +33,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+
 # Global variables
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
