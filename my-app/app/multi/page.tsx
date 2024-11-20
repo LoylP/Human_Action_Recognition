@@ -5,7 +5,6 @@ import { SiRobotframework } from "react-icons/si";
 import { House, UserPlus, Webcam } from 'lucide-react';
 import Link from "next/link";
 
-const path_api = "http://127.0.0.1:8000";
 const path_yolo_api = "http://127.0.0.1:8080" 
 
 export default function Home() {
@@ -30,7 +29,7 @@ export default function Home() {
     formData.append("file", file);
 
     try {
-      const response = await fetch(`${path_api}/upload_video/`, {
+      const response = await fetch(`${path_yolo_api}/upload_video/`, {
         method: "POST",
         body: formData,
       });
@@ -55,13 +54,11 @@ export default function Home() {
       alert("No video file uploaded!");
       return;
     }
-    // Generate video URL for uploaded file
     setCameraUrl(`${path_yolo_api}/pose_video/${file.name}`);
   };
 
   return (
     <div className="flex flex-col justify-center items-center h-screen bg-gray-200">
-      {/* Title and Navigation Buttons */}
       <div className="w-full flex justify-center text-gray-900">
         <h1 className="text-3xl font-bold">Action Recognition Web Multi-Pose</h1>
       </div>
@@ -116,7 +113,7 @@ export default function Home() {
             </div>
           ) : (
             <div className="text-gray-500 text-sm text-center mt-2">
-              No file chosen (Only accept '.mp4', '.avi', '.mov' files)
+              No file chosen (Only accept .mp4, .avi, .mov files)
             </div>
           )}
           <div className="flex flex-col mt-4">

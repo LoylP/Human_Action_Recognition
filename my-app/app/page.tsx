@@ -115,7 +115,7 @@ export default function Home() {
             </div>
           ) : (
             <div className="text-gray-500 text-sm text-center mt-2">
-              No file chosen (Only accept '.mp4', '.avi', '.mov' files)
+              No file chosen (Only accept .mp4, .avi, .mov files)
             </div>
           )}
           <div className="flex flex-col mt-4">

@@ -1,7 +1,5 @@
 "use client";
 import { useState } from "react";
-import { BsRobot } from "react-icons/bs";
-import { SiRobotframework } from "react-icons/si";
 import { House, UserPlus, Webcam } from 'lucide-react';
 import Link from "next/link";
 
