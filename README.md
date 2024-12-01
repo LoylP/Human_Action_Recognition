@@ -1,6 +1,6 @@
 # Human Action Recognition
 
-This project focuses on classifying and recognizing human actions in video sequences and real-time camera feeds. By leveraging cutting-edge deep learning techniques and frameworks, the system efficiently detects and interprets human actions, providing an intuitive and interactive user experience.
+This project focuses on classifying and recognizing human actions in video sequences and real-time camera feeds using skeleton features extracted from dataset. By leveraging cutting-edge deep learning techniques and frameworks, the system efficiently detects and interprets human actions, providing an intuitive and interactive user experience.
 
 ![](/config/image/UI.png)
 ---
@@ -11,6 +11,8 @@ This project focuses on classifying and recognizing human actions in video seque
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
+- [Dataset](#dataset)
+- [Training](#training)
 - [Usage](#usage)
 
 ## Introduction
@@ -62,6 +64,34 @@ Backend_Yolo(FastAPI): http://localhost:8000.
 # To stop the service:
 docker-compose down  
 ```
+
+## Dataset
+- **Dataset Source**: NTU RGB+D 120 dataset.
+- However, I have been filtered to include only the 7 main classes for this task.
+- **Dataset Path**: https://www.kaggle.com/datasets/aiclone/dataset
+
+## Training
+### 1. Run the Notebook
+Use the following notebook to train the model:
+Human_Action_Recognition/notebook/har_trainning.ipynb
+
+- This notebook supports mediapipe for single person action recognition. For multi-person detection, you can replace mediapipe with YOLO Pose v7, using a similar feature extraction approach.
+
+### 2. Training Steps
+
+#### a. Data Preparation
+- Skeleton features are extracted from videos using Mediapipe Pose:
+33 landmark points (x, y, z) per frame.
+- Normalize the number of frames to 30 frames/video. If there are fewer than 30 frames, padding is applied.
+#### b. Model Architecture
+The model is based on a CNN-LSTM architecture:
+
+- CNN Layers: Extract spatial features from the skeleton data.
+- LSTM Layers: Capture temporal dependencies between frames.
+- Dense Layers: Classify the action based on learned features.
+#### c. Training Process
+- The model is trained using the Adam optimizer with categorical cross-entropy loss.
+- Callbacks: ModelCheckpoint (to save the best model) and EarlyStopping (to prevent overfitting).
 
 ## Usage
 #### Start the Application:
